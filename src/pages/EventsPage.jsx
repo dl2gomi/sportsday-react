@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MainLayout } from '../layouts';
-import { Grid } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import { useFetch, useLocalStorage } from '../hooks';
 import { EventCard } from '../components';
 import { useSnackbar } from 'notistack';
@@ -35,7 +35,7 @@ const EventsPage = ({}) => {
     return start1 < end2 && start2 < end1;
   };
 
-  const checkDisable = (item) => {
+  const checkOverlap = (item) => {
     const selectedEvents =
       (data &&
         Array.isArray(data) &&
@@ -44,8 +44,7 @@ const EventsPage = ({}) => {
 
     return (
       !selected.includes(item.id) &&
-      (selected.length >= 3 ||
-        selectedEvents.some((ev) => timespanOverlapWithOne(ev, item)))
+      selectedEvents.some((ev) => timespanOverlapWithOne(ev, item))
     );
   };
 
@@ -57,10 +56,14 @@ const EventsPage = ({}) => {
         message: `You reached maximum number of registration`,
       });
   }, [selected]);
+
   return (
     <MainLayout>
       <Grid container sx={{ flexGrow: 1 }}>
-        <Grid item sm={8} xs={12} sx={{ p: 2 }}>
+        <Grid item md={8} xs={12} sx={{ p: 2 }}>
+          <Box sx={{ mx: 2, my: 0 }} component="h3">
+            All Events
+          </Box>
           <Grid container sx={{ flexGrow: 1 }}>
             {data &&
               Array.isArray(data) &&
@@ -74,7 +77,10 @@ const EventsPage = ({}) => {
                     end={new Date(item.end_time)}
                     sx={{ width: 100 }}
                     selected={selected && selected.includes(item.id)}
-                    disabled={checkDisable(item)}
+                    overlapped={checkOverlap(item)}
+                    limited={
+                      selected.length >= 3 && !selected.includes(item.id)
+                    }
                     select={selectEvent}
                     remove={removeEvent}
                   />
@@ -82,8 +88,42 @@ const EventsPage = ({}) => {
               ))}
           </Grid>
         </Grid>
-        <Grid item sm={4} xs={12} sx={{ p: 2 }}>
-          {JSON.stringify(data)}
+        <Grid
+          item
+          md={4}
+          xs={12}
+          sx={{ p: 2, top: 100, backgroundColor: 'primary.selectedback' }}
+          position="sticky"
+        >
+          <Box sx={{ mx: 2, my: 0 }} component="h3">
+            Selected Events
+            <Grid container sx={{ flexGrow: 1 }}>
+              {data &&
+                Array.isArray(data) &&
+                data.map(
+                  (item, key) =>
+                    selected.includes(item.id) && (
+                      <Grid item key={key} xs={12} sx={{ p: 1 }}>
+                        <EventCard
+                          name={item.event_name}
+                          category={item.event_category}
+                          id={item.id}
+                          start={new Date(item.start_time)}
+                          end={new Date(item.end_time)}
+                          sx={{ width: 100 }}
+                          selected={selected && selected.includes(item.id)}
+                          overlapped={checkOverlap(item)}
+                          limited={
+                            selected.length >= 3 && !selected.includes(item.id)
+                          }
+                          select={selectEvent}
+                          remove={removeEvent}
+                        />
+                      </Grid>
+                    )
+                )}
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
     </MainLayout>

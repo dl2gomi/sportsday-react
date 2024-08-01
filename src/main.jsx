@@ -15,6 +15,7 @@ const theme = createTheme({
       hoverfore: '#cccccc',
       cardback: '#303030',
       cardselected: '#504060',
+      selectedback: '#333333',
     },
   },
 });

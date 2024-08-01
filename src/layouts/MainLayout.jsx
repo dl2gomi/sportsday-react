@@ -6,7 +6,7 @@ const MainLayout = ({ children }) => (
     <Grid item xs={12}>
       <MainHeader></MainHeader>
     </Grid>
-    <Grid item xs={12}>
+    <Grid item xs={12} sx={{ pt: 9 }}>
       {children}
     </Grid>
   </Grid>

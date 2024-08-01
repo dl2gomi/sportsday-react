@@ -13,9 +13,10 @@ import {
   StopCircle as EndIcon,
   CheckCircleRounded as SelectIcon,
   RemoveCircleRounded as RemoveIcon,
+  ReportProblem as ReportIcon,
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
-import { purple } from '@mui/material/colors';
+import { purple, red } from '@mui/material/colors';
 import { useSnackbar } from 'notistack';
 
 const EventCard = ({
@@ -25,7 +26,8 @@ const EventCard = ({
   start,
   end,
   selected = false,
-  disabled = false,
+  overlapped = false,
+  limited = false,
   select,
   remove,
 }) => {
@@ -78,7 +80,9 @@ const EventCard = ({
           title="Start time"
         >
           <StartIcon sx={{ mr: 2 }}></StartIcon>
-          <Typography variant="body2">{start.toLocaleString()}</Typography>
+          <Typography variant="body2" noWrap>
+            {start.toLocaleString()}
+          </Typography>
         </Box>
         <Box
           sx={{ display: 'flex', my: 0.2 }}
@@ -86,14 +90,27 @@ const EventCard = ({
           title="End time"
         >
           <EndIcon sx={{ mr: 2 }}></EndIcon>
-          <Typography variant="body2">{end.toLocaleString()}</Typography>
+          <Typography variant="body2" noWrap>
+            {end.toLocaleString()}
+          </Typography>
         </Box>
       </CardContent>
       <CardActions disableSpacing>
-        <Box sx={{ flexGrow: 1 }} />
+        <Box
+          sx={{ flexGrow: 1, px: 2, display: 'flex', color: red[400] }}
+          color="warning"
+          alignItems="center"
+        >
+          {overlapped && (
+            <>
+              <ReportIcon sx={{ fontSize: 18, mr: 0.5 }}></ReportIcon>
+              <Typography sx={{ fontSize: 12 }}>Overlapped</Typography>
+            </>
+          )}
+        </Box>
         {!selected && (
           <Button
-            disabled={disabled}
+            disabled={overlapped || limited}
             variant="contained"
             startIcon={<SelectIcon />}
             color="secondary"
@@ -116,7 +133,7 @@ const EventCard = ({
         )}
         {selected && (
           <Button
-            disabled={disabled}
+            disabled={overlapped || limited}
             variant="contained"
             startIcon={<RemoveIcon />}
             color="warning"
@@ -149,7 +166,8 @@ EventCard.propTypes = {
   start: PropTypes.instanceOf(Date).isRequired,
   end: PropTypes.instanceOf(Date).isRequired,
   selected: PropTypes.bool,
-  disabled: PropTypes.bool,
+  overlapped: PropTypes.bool,
+  limited: PropTypes.bool,
   select: PropTypes.func,
   remove: PropTypes.func,
 };

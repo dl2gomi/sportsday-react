@@ -43,7 +43,7 @@ const MainHeader = ({}) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Container maxWidth="xxl">
           <Toolbar disableGutters>
             <Box
@@ -150,7 +150,7 @@ const MainHeader = ({}) => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Denis Lee" src="/static/images/avatar/dl.png" />
                 </IconButton>
               </Tooltip>
               <Menu
