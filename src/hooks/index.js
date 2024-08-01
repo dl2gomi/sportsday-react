@@ -1,1 +1,1 @@
-export { default as useMockData } from './useMockData';
+export { default as useFetch } from './useFetch';

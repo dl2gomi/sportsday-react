@@ -12,6 +12,7 @@ const theme = createTheme({
       fore: '#ffffff',
       hoverback: '#484848',
       hoverfore: '#cccccc',
+      cardback: '#303030',
     },
   },
 });
