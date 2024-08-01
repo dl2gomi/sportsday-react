@@ -25,6 +25,7 @@ const EventCard = ({
   start,
   end,
   selected = false,
+  disabled = false,
   select,
   remove,
 }) => {
@@ -92,6 +93,7 @@ const EventCard = ({
         <Box sx={{ flexGrow: 1 }} />
         {!selected && (
           <Button
+            disabled={disabled}
             variant="contained"
             startIcon={<SelectIcon />}
             color="secondary"
@@ -114,6 +116,7 @@ const EventCard = ({
         )}
         {selected && (
           <Button
+            disabled={disabled}
             variant="contained"
             startIcon={<RemoveIcon />}
             color="warning"
@@ -146,6 +149,7 @@ EventCard.propTypes = {
   start: PropTypes.instanceOf(Date).isRequired,
   end: PropTypes.instanceOf(Date).isRequired,
   selected: PropTypes.bool,
+  disabled: PropTypes.bool,
   select: PropTypes.func,
   remove: PropTypes.func,
 };
