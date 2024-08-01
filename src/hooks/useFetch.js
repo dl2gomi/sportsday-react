@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useMockData = ({ url }) => {
+const useFetch = ({ url }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,4 +35,4 @@ const useMockData = ({ url }) => {
   return { data, loading, error };
 };
 
-export default useMockData;
+export default useFetch;
