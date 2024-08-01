@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MainLayout } from '../layouts';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Alert } from '@mui/material';
 import { useFetch, useLocalStorage } from '../hooks';
 import { EventCard, EventCardSkeleton } from '../components';
 import { useSnackbar } from 'notistack';
@@ -84,37 +84,44 @@ const EventsPage = ({}) => {
             </Grid>
           )}
           {!loading && (
-            <Grid container sx={{ flexGrow: 1 }}>
-              {data &&
-                Array.isArray(data) &&
-                data.map((item, key) => (
-                  <Grid
-                    item
-                    key={key}
-                    xl={3}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    sx={{ p: 1 }}
-                  >
-                    <EventCard
-                      name={item.event_name}
-                      category={item.event_category}
-                      id={item.id}
-                      start={new Date(item.start_time)}
-                      end={new Date(item.end_time)}
-                      sx={{ width: 100 }}
-                      selected={selected && selected.includes(item.id)}
-                      overlapped={checkOverlap(item)}
-                      limited={
-                        selected.length >= 3 && !selected.includes(item.id)
-                      }
-                      select={selectEvent}
-                      remove={removeEvent}
-                    />
-                  </Grid>
-                ))}
-            </Grid>
+            <>
+              {selected && selected.length >= 3 && (
+                <Alert variant="filled" severity="warning" sx={{ m: 1 }}>
+                  You can register 3 events at maximum.
+                </Alert>
+              )}
+              <Grid container sx={{ flexGrow: 1 }}>
+                {data &&
+                  Array.isArray(data) &&
+                  data.map((item, key) => (
+                    <Grid
+                      item
+                      key={key}
+                      xl={3}
+                      lg={4}
+                      md={6}
+                      xs={12}
+                      sx={{ p: 1 }}
+                    >
+                      <EventCard
+                        name={item.event_name}
+                        category={item.event_category}
+                        id={item.id}
+                        start={new Date(item.start_time)}
+                        end={new Date(item.end_time)}
+                        sx={{ width: 100 }}
+                        selected={selected && selected.includes(item.id)}
+                        overlapped={checkOverlap(item)}
+                        limited={
+                          selected.length >= 3 && !selected.includes(item.id)
+                        }
+                        select={selectEvent}
+                        remove={removeEvent}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
+            </>
           )}
         </Grid>
         <Grid

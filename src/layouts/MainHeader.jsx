@@ -59,12 +59,12 @@ const MainHeader = ({}) => {
               to="/"
               alignItems="center"
             >
-              <HomeIcon sx={{ mr: 1 }} />
+              <Avatar alt="SportsDAY logo" src="/logo.png" />
               <Typography
                 variant="h6"
                 noWrap
                 sx={{
-                  mr: 2,
+                  mx: 1,
                   fontWeight: 700,
                   letterSpacing: '.1rem',
                   textDecoration: 'none',
@@ -99,12 +99,12 @@ const MainHeader = ({}) => {
               component={RouterLink}
               to="/"
             >
-              <HomeIcon sx={{ mr: 1 }} />
+              <Avatar alt="SportsDAY logo" src="/logo.png" />
               <Typography
                 variant="h5"
                 noWrap
                 sx={{
-                  mr: 2,
+                  mx: 1,
                   fontWeight: 700,
                   letterSpacing: '.1rem',
                   textDecoration: 'none',

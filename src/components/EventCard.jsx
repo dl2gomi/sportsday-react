@@ -104,7 +104,9 @@ const EventCard = ({
           {overlapped && (
             <>
               <ReportIcon sx={{ fontSize: 18, mr: 0.5 }}></ReportIcon>
-              <Typography sx={{ fontSize: 12 }}>Overlapped</Typography>
+              <Typography sx={{ fontSize: 12 }} noWrap>
+                Time Overlap
+              </Typography>
             </>
           )}
         </Box>
