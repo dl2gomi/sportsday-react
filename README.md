@@ -1,8 +1,10 @@
-# React + Vite
+# SportsDAY Events Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This website provides management features about sportsday events to users.  
+This is designed and developed by Denis Lee(dl2gomi@gmail.com) for a techscholareducation test assignment.
 
-Currently, two official plugins are available:
+Some popular JS libraries are used.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Material UI (https://mui.com)
+- Vite (https://vitejs.dev)
+- notistack for toasts (https://notistack.com)
