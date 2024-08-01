@@ -1,27 +1,41 @@
-import { Star } from '@mui/icons-material';
 import {
   Card,
   CardHeader,
   CardContent,
-  CardMedia,
   Avatar,
   Typography,
   CardActions,
-  IconButton,
+  Button,
   Box,
 } from '@mui/material';
 import {
   PlayCircleFilled as StartIcon,
   StopCircle as EndIcon,
+  CheckCircleRounded as SelectIcon,
+  RemoveCircleRounded as RemoveIcon,
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { purple } from '@mui/material/colors';
+import { useSnackbar } from 'notistack';
 
-const EventCard = ({ name, id, category, start, end }) => {
+const EventCard = ({
+  name,
+  id,
+  category,
+  start,
+  end,
+  selected = false,
+  select,
+  remove,
+}) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   return (
     <Card
       sx={{
-        backgroundColor: 'primary.cardback',
+        backgroundColor: !selected
+          ? 'primary.cardback'
+          : 'primary.cardselected',
         color: 'primary.fore',
       }}
     >
@@ -74,7 +88,53 @@ const EventCard = ({ name, id, category, start, end }) => {
           <Typography variant="body2">{end.toLocaleString()}</Typography>
         </Box>
       </CardContent>
-      <CardActions disableSpacing></CardActions>
+      <CardActions disableSpacing>
+        <Box sx={{ flexGrow: 1 }} />
+        {!selected && (
+          <Button
+            variant="contained"
+            startIcon={<SelectIcon />}
+            color="secondary"
+            sx={{
+              '&:focus': {
+                outline: 'none',
+              },
+            }}
+            onClick={() => {
+              enqueueSnackbar({
+                variant: 'success',
+                anchorOrigin: { horizontal: 'right', vertical: 'top' },
+                message: `You registered this event: ${name}`,
+              });
+              select(id);
+            }}
+          >
+            Select
+          </Button>
+        )}
+        {selected && (
+          <Button
+            variant="contained"
+            startIcon={<RemoveIcon />}
+            color="warning"
+            sx={{
+              '&:focus': {
+                outline: 'none',
+              },
+            }}
+            onClick={() => {
+              enqueueSnackbar({
+                variant: 'warning',
+                anchorOrigin: { horizontal: 'right', vertical: 'top' },
+                message: `You unregistered this event: ${name}`,
+              });
+              remove(id);
+            }}
+          >
+            Remove
+          </Button>
+        )}
+      </CardActions>
     </Card>
   );
 };
@@ -85,6 +145,9 @@ EventCard.propTypes = {
   category: PropTypes.string.isRequired,
   start: PropTypes.instanceOf(Date).isRequired,
   end: PropTypes.instanceOf(Date).isRequired,
+  selected: PropTypes.bool,
+  select: PropTypes.func,
+  remove: PropTypes.func,
 };
 
 export default EventCard;
